@@ -7,6 +7,7 @@ import random
 import time
 import datetime
 import io
+import os
 
 bot = discord.Client()
 bot_prefix= "<"
