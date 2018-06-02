@@ -58,10 +58,11 @@ async def on_member_join(member):
         await bot.send_message(channel1, msg)
     
     elif server.id == "446967025773051905":
+        #hello
         chan = bot.get_channel("446972812712738816")
         server = member.server
         msg = "**:tada: Welcome to {} {}. You are the {} User!**".format(member.server.name, member.mention, len(server.members))
-        await bot.send_message(channel1, msg)
+        await bot.send_message(chan, msg)
     else:
         return
 
