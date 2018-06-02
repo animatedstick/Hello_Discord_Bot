@@ -9,6 +9,9 @@ import datetime
 import io
 import os
 
+
+minutes = 0
+hour = 0
 bot = discord.Client()
 bot_prefix= "<"
 bot = commands.Bot(command_prefix=bot_prefix)
@@ -130,6 +133,9 @@ async def on_message(message):
         return
     if message.author.bot:
         return
+    elif message.content.startswith('<uptime'):
+        await bot.send_message(message.channel, ":alarm_clock:  I Have Been Online For **{0}** Hour(s) and **{1}** Minute(s) Online . ".format(hour, minutes))
+    
     elif message.content.startswith('<reqpre'):
         text = message.content[len('<report'):].strip()
 
@@ -1037,6 +1043,19 @@ async def open10(ctx):
     await asyncio.sleep(2.5)
     x = await bot.edit_message(x ,"**Container 10**\n\n{}".format(cho10))
 
+async def tutorial_uptime():
+    await bot.wait_until_ready()
+    global minutes
+    minutes = 0
+    global hour
+    hour = 0
+    while not bot.is_closed:
+        await asyncio.sleep(60)
+        minutes += 1
+        if minutes == 60:
+            minutes = 0
+            hour += 1
 
+bot.loop.create_task(tutorial_uptime())
 bot.run(os.getenv("TOKEN"))
 
