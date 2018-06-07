@@ -984,4 +984,4 @@ async def tutorial_uptime():
 bot.loop.create_task(tutorial_uptime())
 
 
-bot.run ("")
+bot.run(os.getenv("TOKEN"))
