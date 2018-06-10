@@ -164,6 +164,13 @@ async def on_message(message):
             await bot.delete_message(message)
             await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
             await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
+        elif message.server.id == "455262107277983754":
+            #Games Prince
+            text = message.content[len('<report'):].strip()
+            repchan = bot.get_channel("455268577537425409")
+            await bot.delete_message(message)
+            await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
+            await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
         
         elif message.server.id == "454067549374775306":
             #Blitz Server
@@ -192,6 +199,14 @@ async def on_message(message):
             await bot.delete_message(message)
             await bot.send_message(message.channel , "{} , Your Suggestion Was Sent In !".format(message.author.mention))
             await bot.send_message(repchan ,"**User:-** {}\n**Suggestion:-** {}".format(message.author.mention , text))
+        elif message.server.id == "455262107277983754":
+            #Blitz
+            text = message.content[len('<suggest'):].strip()
+            repchan = bot.get_channel("455268610211053570")
+            await bot.delete_message(message)
+            await bot.send_message(message.channel , "{} , Your Suggestion Was Sent In !".format(message.author.mention))
+            await bot.send_message(repchan ,"**User:-** {}\n**Suggestion:-** {}".format(message.author.mention , text))
+
 
         else:
             await bot.send_message(message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
