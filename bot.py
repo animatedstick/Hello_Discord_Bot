@@ -76,6 +76,13 @@ async def on_member_join(member):
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel2, msg)
+    elif server.id == "455262107277983754":
+        # N Hub#
+        channel2 = bot.get_channel("455262426737410060")
+        server = member.server
+        msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
+        await bot.send_message(channel2,msg )
+        
     else:
         return
 
