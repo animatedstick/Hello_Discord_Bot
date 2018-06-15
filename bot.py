@@ -123,6 +123,11 @@ async def on_command_error(error, ctx):
         await bot.send_message(ctx.message.channel, "You Don't Have Enough  Permissions to Excute this Command ! :x:")
     elif isinstance(error, discord.errors.Forbidden):
         await bot.send_message(ctx.message.author , ":x: Missing Permissions to Excute the Command !")
+    elif isinstance(error, commands.CommandOnCooldown):
+        x =  await bot.send_message(ctx.message.channel, "**Spam Alert !**\n\n{} , {}".format(ctx.message.author.mention , error))
+        await asyncio.sleep(5)
+        await bot.delete_message(x)
+
     else:
         await bot.send_message(ctx.message.author, "Something is Wrong ! :x:")
 
@@ -390,7 +395,69 @@ async def warn(ctx, member : discord.Member):
 
     else:
         await bot.send_message(ctx.message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
+    
 
+@bot.command(pass_context=True)
+async def battle(ctx , user : discord.Member = None):
+     
+    team = random.choice([ctx.message.author.name , user.name])
+    team2 = random.choice([ctx.message.author.name , user.name])
+    team3 = random.choice([ctx.message.author.name , user.name])
+    chan = ctx.message.channel
+    rturr = random.choice(["Firebird" , "Freeze" , "Smoky" , "Hammer" , "Striker" ,"Thunder" , "Railgun" , "Shaft" , "Magnum" , "Terminator" ,"Railgun XT" ,"Terminator XT" ])
+    rhull = random.choice(["Titan" , "Viking" , "Hornet" , "Mammoth" , "Wasp" ,"Juggernaut"])
+    mturr = random.choice(["Firebird" , "Freeze" , "Smoky" , "Hammer" , "Striker" ,"Thunder" , "Railgun" , "Shaft" , "Magnum" , "Terminator" ])
+    scree = random.choice(["https://cdn.discordapp.com/attachments/437510467196551168/456416178982748160/maxresdefault.jpg" , "https://cdn.discordapp.com/attachments/437510467196551168/437510909519200265/maxresdefault_2.jpg" , "https://cdn.discordapp.com/attachments/437510467196551168/442216558530658305/Screenshot_110.png" , "https://cdn.discordapp.com/attachments/437510467196551168/442225631686688768/striker_viking_stadium30000.png"])
+    mhull = random.choice(["Titan" , "Viking" , "Hornet" , "Mammoth" , "Wasp" ,"Juggernaut"])
+    winner = random.choice([ctx.message.author.name , user.name])
+    if user is None:
+        await bot.say(":x: Mention a User to Start the Battle With ! ")
+    if user.id == bot.user.id:
+        await bot.say("Nope ! I Don't Want To Battle :x: ")
+    if user.id ==  ctx.message.author.id:
+         await bot.say(":x: You Cannot Start the Battle Your Self")
+    else:
+        embed=discord.Embed(title="Battle Starts..", description="\n\n**Loading :<a:loading:438280917363195905>**\n\n")
+        embed.set_author(name="{} VS {}".format(ctx.message.author.name , user.name), icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
+        embed.set_thumbnail(url=scree)
+        embed.add_field(name="Battle Details", value="**{}** - {} M3 , {} M3\n**{}** - {} M3 , {} M3".format(ctx.message.author.name
+        ,rturr
+        ,rhull
+        ,user.name
+        ,mturr
+        ,mhull), inline=False)
+        embed.set_footer(text="Battle Starts in Few Seconds")
+        x = await bot.send_message(chan ,embed=embed)
+        await asyncio.sleep(5)
+        embed=discord.Embed(title="Battle Log ")
+        embed.set_author(name="{} VS {}".format(ctx.message.author.name , user.name), icon_url="https://cdn.discordapp.com/attachments/433182340211146755/433485204925972480/Tanki-Online-Logo.png")
+        embed.set_thumbnail(url=scree)
+        embed.add_field(name="Log..", value="{} Spawn\n{} Spawn\n{} Shoot {}\n{} Go {} Behind and Shoot Him\n{} Used Repair Kit\nFinally {} Did  {} Kills and Won !".format(team
+        ,ctx.message.author.name
+        ,user.name
+        ,team
+        ,team3
+        ,team
+        ,team2
+        ,winner
+        ,random.randint(1,100)), inline=False)
+        embed.add_field(name="Winner", value=winner, inline=False)
+        embed.add_field(name="Rewards", value="{} - **{}** Crystals\n{} - **{}** Crystals".format(ctx.message.author.name
+        ,random.randint(1 , 100)
+        ,user.name
+        ,random.randint(2, 100)), inline=True)
+        embed.add_field(name="Turrents and Hulls" , value="**{}** - {} M3 , {} M3\n**{}** - {} M3  , {} M3".format(ctx.message.author.name,
+        rturr,
+        rhull,
+        user.name,
+        mturr,
+        mhull), inline=True)
+        embed.set_footer(text="{} Won | Challenger {}".format(winner , ctx.message.author.name) , icon_url="https://cdn.discordapp.com/attachments/433182340211146755/433485204925972480/Tanki-Online-Logo.png")
+        x = await bot.edit_message(x ,embed=embed)
+
+
+
+        
 
 @bot.command(pass_context = True)
 async def checkrep(ctx, user : discord.Member):
@@ -774,30 +841,42 @@ async def insult(ctx , name: discord.Member = None):
                                                                     ":skull: **|** {} , If I Hurt Your Feelings In Any Way I Just Want To Know From The Bottom Of My Heart That I Don’t Care.".format (name.mention),
                                                                     ":skull: **|** {} , Your Are The Reason That HD Leave Tanki Online" .format(name.mention)]))
 
-@bot.command(pass_context = True)
-async def open1(ctx):
-    await bot.send_message(ctx.message.channel, random.choice (["**Container 1**\n\n<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**. ",
-                                                                 "**Container 1**\n\n<:armor:447647517597892638> **|** You've just received **125 Double Armor**.",
-                                                                 "**Container 1**\n\n<:dd:447648822265380867> **|** You've just received **125 Double Damage**.",
-                                                                 "**Container 1**\n\n<:nb:447648823507157012> **|** You've just received **125 Speed Boost**. ",
-                                                                 "**Container 1**\n\n<:mine:447651503210233866> **|** You've just received **125 Mines**. ",
-                                                                 "**Container 1**\n\n<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**.",
-                                                                 "**Container 1**\n\n<:armor:447647517597892638> **|** You've just received **125 Double Armor**.",
-                                                                 "**Container 1**\n\n<:dd:447648822265380867> **|** You've just received **125 Double Damage**.",
-                                                                 "**Container 1**\n\n:regional_indicator_p: **|** You've just received **Mosaic Paint** !",
-                                                                 "**Container 1**\n\n<:Premium:447648813331513354> **|** You've just received **3 days of Premium Account** ",
-                                                                 "**Container 1**\n\n:a: **|** You've just received **250 of all Supplies** ",
-                                                                 "**Container 1**\n\n:regional_indicator_p: **|** You've just received **Frost paint** ",
-                                                                 "**Container 1**\n\n<:eternity:447648817282547723> **|** You've just received **Eternity Paint** ",
-                                                                 "**Container 1**\n\n<:riprip:419067396779933707> **|** You've just received **System Cant Read The Item** ",
-                                                                 "**Container 1**\n\n<:gold:447648811779620864> **|** You've just received **10 Gold Boxes** ",
-                                                                 "**Container 1**\n\n<:gold:447648811779620864> **|** You've just received **5 Gold Boxes** ",
-                                                                 "**Container 1**\n\n<:gold:447648811779620864> **|** You've just received **999999 Gold Boxes** ! Man Stop Using Hack ",
-                                                                 "**Container 1**\n\n:regional_indicator_p: **|** You've just received **Spark Paint** ! Go Ahead You Just Look Like Claudiu",
-                                                                 "**Container 1**\n\n<:Crystals:447647301826117634> **|** You've just received **25.000 Crystals** !" ,
-                                                                 "**Container 1**\n\n<:411277821357457428:447650450024431626> **|** You've just received **Conatainer x5** ! Sounds Good !",
-                                                                 "**Container 1**\n\n:regional_indicator_p: **|** You've just received **Vanadium Paint** ! ",
-                                                                 "**Container 1**\n\n<:riprip:419067396779933707> **|** You've just received a **Slap** From Community Manager For Hacking a The Yesterday RIP Bro !"]))
+@bot.command(pass_context=True)
+@commands.cooldown(1, 15, commands.BucketType.user)
+async def open1(ctx , user : discord.Member = None):
+     #choice = random.choice(["You Found a **Boot** :boot:","You Found a **Sunglass** :dark_sunglasses: " , "You Found a **Pizza** :pizza: " ,"You Found a **Money Bag ** :moneybag: "])
+
+     cho8 = random.choice(["<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**. ",
+                                                                 "<:armor:447647517597892638> **|** You've just received **125 Double Armor**.",
+                                                                 "<:dd:447648822265380867> **|** You've just received **125 Double Damage**.",
+                                                                 "<:nb:447648823507157012> **|** You've just received **125 Speed Boost**. ",
+                                                                 "<:mine:447651503210233866> **|** You've just received **125 Mines**. ",
+                                                                 "<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**.",
+                                                                 "<:armor:447647517597892638> **|** You've just received **125 Double Armor**.",
+                                                                 "<:dd:447648822265380867> **|** You've just received **125 Double Damage**.",
+                                                                 ":regional_indicator_p: **|** You've just received **Mosaic Paint** !",
+                                                                 "<:Premium:447648813331513354> **|** You've just received **3 days of Premium Account** ",
+                                                                 ":a: **|** You've just received **250 of all Supplies** ",
+                                                                 ":regional_indicator_p: **|** You've just received **Frost paint** ",
+                                                                 "<:eternity:447648817282547723> **|** You've just received **Eternity Paint** ",
+                                                                 "<:riprip:419067396779933707> **|** You've just received **System Cant Read The Item** ",
+                                                                 "<:gold:447648811779620864> **|** You've just received **10 Gold Boxes** ",
+                                                                 "<:gold:447648811779620864> **|** You've just received **5 Gold Boxes** ",
+                                                                 "<:gold:447648811779620864> **|** You've just received **999999 Gold Boxes** ! Man Stop Using Hack ",
+                                                                 ":regional_indicator_p: **|** You've just received **Spark Paint** ! Go Ahead You Just Look Like Claudiu",
+                                                                 "<:Crystals:447647301826117634> **|** You've just received **25.000 Crystals** !" ,
+                                                                 "<:411277821357457428:447650450024431626> **|** You've just received **Conatainer x5** ! Sounds Good !",
+                                                                 ":regional_indicator_p: **|** You've just received **Vanadium Paint** ! ",
+                                                                 "<:riprip:419067396779933707> **|** You've just received a **Slap** From Community Manager For Hacking a The Yesterday RIP Bro !"])
+
+     embed=discord.Embed(description="**Opening Container** <:411277821357457428:447650450024431626>",color=0x111111)
+     x = await bot.send_message(ctx.message.channel , embed=embed)
+     await asyncio.sleep(0.5)
+     embed=discord.Embed(title="Container Opened", description=cho8, color=0x111111)
+     embed.set_author(name="Container ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+     embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+     x = await bot.edit_message(x , embed=embed)
+    
 
 
 @bot.command(pass_context=True)
