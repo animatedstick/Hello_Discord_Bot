@@ -353,9 +353,9 @@ async def on_message(message):
 @bot.command(pass_context=True)
 async def vlog (ctx):
     message = ctx.message
-    embed=discord.Embed(title="Episode #172")
+    embed=discord.Embed(title="Episode #174")
     embed.set_author(name="Tanki Online V-LOG", icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    embed.add_field(name="Link ...", value="[Click Here](https://www.youtube.com/watch?v=l2W-wRBlfeo&t=2s)", inline=True)
+    embed.add_field(name="Link ...", value="[Click Here](https://www.youtube.com/watch?v=H2e4msli2cc)", inline=True)
     embed.set_footer(text="Tanki Online | Hello | 2018 | Not Updated , Let Us Know !", icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
     await bot.send_message(message.channel,embed=embed)
 
@@ -464,7 +464,7 @@ async def battle(ctx , user : discord.Member = None):
 
 @bot.command(pass_context = True)
 async def checkrep(ctx, user : discord.Member):
-    if ctx.message.server.id == "ID":
+    if ctx.message.server.id == "418001869781205002":
         #SCANNER'S
         await bot.say("Sent !")
         await bot.send_message(user ,"Your Report Was Checked By The Moderators In **{}** , Check There !".format(ctx.message.server.name))
