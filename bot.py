@@ -153,6 +153,9 @@ async def on_message(message):
         return
     if message.author.bot:
         return
+    if not message.server:
+        await bot.send_message(message.channel,random.choice(["Hey !" ,"How Are You ?" , "Do you have a Girl ?", "Yes" ,"Why" , "Lmao" , "Hey Commands Dont Work Here !", "Use <support to Join My Support Server " , "Thank You" , "My Owner is Scanner#4797" , "Use <help to View all Commands :)"]))
+   
     elif message.content.startswith('<report'):
         if message.server.id == "418001869781205002":
             #Scanner's Server
