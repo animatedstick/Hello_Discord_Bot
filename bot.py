@@ -604,7 +604,7 @@ async def userinfo(ctx, user: discord.Member = None):
     if user is None:
         embed=discord.Embed(title="{}'s Information".format(ctx.message.author.name), url=ctx.message.author.avatar_url)
         embed.set_author(name=ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        embed.set_thumbnail(url=ctx.message.author.display.avatar_url)
         embed.add_field(name="User Name", value=ctx.message.author.name, inline=True)
         embed.add_field(name="User Tag", value="#" + ctx.message.author.discriminator, inline=True)
         embed.add_field(name="User ID", value=ctx.message.author.id, inline=True)
@@ -746,6 +746,8 @@ async def eye(ctx):
     x = await bot.edit_message(x , "o.O xD")
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 30, commands.BucketType.user)
+
 async def virus(ctx, user: discord.Member = None):
     if user is None:
         await bot.say(":x: Mention a User to Send Virus ! ")
@@ -852,7 +854,7 @@ async def insult(ctx , name: discord.Member = None):
                                                                     ":skull: **|** {} , Your Are The Reason That HD Leave Tanki Online" .format(name.mention)]))
 
 @bot.command(pass_context=True)
-@commands.cooldown(1, 15, commands.BucketType.user)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def open1(ctx , user : discord.Member = None):
      #choice = random.choice(["You Found a **Boot** :boot:","You Found a **Sunglass** :dark_sunglasses: " , "You Found a **Pizza** :pizza: " ,"You Found a **Money Bag ** :moneybag: "])
 
@@ -890,6 +892,8 @@ async def open1(ctx , user : discord.Member = None):
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+
 async def open10(ctx):
 
     cho = random.choice(["<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**. ",
