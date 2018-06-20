@@ -892,7 +892,7 @@ async def open1(ctx , user : discord.Member = None):
 
 
 @bot.command(pass_context=True)
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(1, 20, commands.BucketType.user)
 
 async def open10(ctx):
 
