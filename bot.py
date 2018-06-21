@@ -77,10 +77,13 @@ async def on_member_join(member):
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel1, msg)
+        await bot.send_message(member ,  "Hey There !\nOne of the Upcoming Servers on Tanki Discord Make Sure You Join There :wink: https://discord.gg/SsndPjB")
     elif server.id == "454067549374775306":
         # Blitz Server #
         channel2 = bot.get_channel("454067549374775309")
         server = member.server
+
+        await bot.send_message(member ,  "Hey There !\nOne of the Upcoming Servers on Tanki Discord Make Sure You Join There :wink: https://discord.gg/SsndPjB")
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel2, msg)
     elif server.id == "441893381397020673":
