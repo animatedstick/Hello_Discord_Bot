@@ -511,7 +511,7 @@ async def cunmute(ctx, *, member : discord.Member):
 
 @bot.command(pass_context = True)
 async def dropgold(ctx):
-    embed = discord.Embed(description = "<:gold:447648811779620864> **| {}** Has Dropped a Gold Box ".format(ctx.message.author.name), color=0xff8040)
+    embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Dropped a Gold Box ".format(ctx.message.author.name), color=0xff8040)
     await bot.say(embed=embed)
 
     await asyncio.sleep(0.5)
@@ -519,7 +519,7 @@ async def dropgold(ctx):
     if msg.author.id == bot.user.id:
         return
     else:
-        embed = discord.Embed(description = "<:gold:447648811779620864> **| {}** Has Taken the Gold Box ".format(msg.author.name), color =0xff8040)
+        embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Taken the Gold Box ".format(msg.author.name), color =0xff8040)
         await bot.say(embed=embed)
 
 
