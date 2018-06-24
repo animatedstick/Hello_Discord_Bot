@@ -509,6 +509,20 @@ async def cmute(ctx, *, member : discord.Member):
 async def cunmute(ctx, *, member : discord.Member):
     await bot.send_message(ctx.message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
 
+@bot.command(pass_context = True)
+async def dropgold(ctx):
+    embed = discord.Embed(description = "<:gold:447648811779620864> **| {}** Has Dropped a Gold Box ".format(ctx.message.author.name), color=0xff8040)
+    await bot.say(embed=embed)
+
+    await asyncio.sleep(0.5)
+    msg = await bot.wait_for_message(channel=ctx.message.channel)
+    if msg.author.id == bot.user.id:
+        return
+    else:
+        embed = discord.Embed(description = "<:gold:447648811779620864> **| {}** Has Taken the Gold Box ".format(msg.author.name), color =0xff8040)
+        await bot.say(embed=embed)
+
+
 @bot.command(pass_context=True)
 async def premium(ctx):
     await bot.say("**Hello Premium <:Premium:447648813331513354>**\nAllows You To Use Premium Commands\nType `<help` To Check premuim Commands\n$1 For a User , $3 For a Server ")
