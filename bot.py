@@ -54,7 +54,8 @@ async def on_member_join(member):
         #Scanner#
         channel1 = bot.get_channel("418001869781205004")
         server = member.server
-        embed=discord.Embed(title="Welcome {}".fomrat(member.name), description="**:tada: Welcome to {} {} , You Are The {} User !**".format(member.server.name, member.mention, len(server.members))
+       
+        embed=discord.Embed(title="Welcome {}".fomrat(member.name), description="**:tada: Welcome to {} {} , You Are The {} User !**".format(member.server.name, member.mention, len(server.members)))
         embed.set_author(name=member, icon_url=member.avatar_url)
         await bot.send_message(channel1, embed=embed)
     
