@@ -55,7 +55,9 @@ async def on_member_join(member):
         channel1 = bot.get_channel("418001869781205004")
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
-        await bot.send_message(channel1, msg)
+        embed=discord.Embed(title="Welcome Discoed", description="**:tada: Welcome to {} {} , You Are The {} User !**")
+        embed.set_author(name=member, icon_url=member.avatar_url)
+        await bot.send_message(channel1, embed=embed)
     elif server.id == "458206172940337190":
         #Scanner#
         channe = bot.get_channel("458213198408056834")
@@ -83,8 +85,7 @@ async def on_member_join(member):
         channel2 = bot.get_channel("454067549374775309")
         server = member.server
 
-        await bot.send_message(member ,  "Hey There !\nOne of the Upcoming Servers on Tanki Discord Make Sure You Join There :wink: https://discord.gg/SsndPjB")
-        msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
+       msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel2, msg)
     elif server.id == "441893381397020673":
         #Alak
