@@ -18,10 +18,31 @@ bot = discord.Client()
 bot_prefix= "<"
 bot = commands.Bot(command_prefix=bot_prefix)
 
+
+
+bot.remove_command("help")
+@bot.command(pass_context=True)
+async def help(ctx):
+   embed=discord.Embed(title="If You Need On Help Please Join Our Support Server ", url="https://discord.gg/fq3J5c5")
+   embed.set_author(name='Hello Help Center - Prefix "<"', icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.png?size=256")
+   embed.add_field(name="Action Commands", value="`hug` , `kiss` , `slap`" , inline=False)
+   embed.add_field(name="Game Commands", value="`rps paper` , `rps rock` , `rps scissor` " , inline=False) 
+   embed.add_field(name="Info Commands", value="`ping` , `serverinv` , `serverinfo` , `servericon` ,  `afk - back` ,  `userinfo` , `avatar` , `count`" , inline=False)
+   embed.add_field(name="Fun Commands", value="`insult` , `troll` , `virus` , `8ball` , `tell` , `lovecal` , `gaycal`" , inline=False)
+   embed.add_field(name="Tanki Online Commands", value="`tolinks`, `battle` , `open1` , `open10` ,` play` , `tankibot` , `dropgold`", inline=False)
+   embed.add_field(name="Fortnite Commands", value="`fortnite_drop` , `fortnite_dance`", inline=False)
+   embed.add_field(name="Moderation Commands", value="`report` , `suggest` , `warn` , `changenick` , `c_mute` , `c_unmute` ,`kick` , `ban` , `getbans` , `clear`" , inline=True)
+   embed.add_field(name="Image Commands", value="`cry` , `cat` , `meme` , `dog` , `cheer` , `party`"  , inline=True)
+   embed.add_field(name="Bot Info Commands", value="`support` , `premium` , `uptime` , `info` , `askhelp` , `reqpre` " , inline=True)
+   embed.set_footer(text="Requested By {} | {}".format(ctx.message.author.name,ctx.message.server.name) , icon_url=ctx.message.server.icon_url)
+   await bot.say(embed=embed)
+
+
+
 @bot.event
 async def on_command(command, ctx):
     chane = bot.get_channel("451696010914299905")
-    await bot.send_message(chane,"**Command** -- `<{}` , **Server:** `{}` | `{}` **User:** `{}` | `{}`".format(command,
+    await bot.send_message(chane,"**Command** `<{}` , **Server:** `{}` | `{}` **User:** `{}` | `{}`".format(command,
             ctx.message.server.name,
             ctx.message.server.id,
             ctx.message.author.name,
@@ -31,7 +52,7 @@ async def on_command(command, ctx):
 async def on_server_join(server):
     await bot.change_presence(game=discord.Game(name="<HELP | {:,} Users ".format(len(set(bot.get_all_members()))),type=3))
     channel = bot.get_channel("452352293275172894")
-    await bot.send_message(server.owner ,":wave: Hey There ! I am **Hello** , A Discord Bot By Scanner#4797 <:Hello:446973883619213312>\n\nTo Get Started Use `<help` to View All Commands !\n\n**Useful Links:-**\nDiscord Bot List Vote :- https://discordbots.org/bot/445544179310002176\nSupport Server :- https://discord.gg/S6gDBqr\n\n:tada: **Enjoy ! Have Fun !**")
+    await bot.send_message(server.owner ,":wave: Hey There ! I am **Hello** , A Discord Bot By Scanner#4797 <:Hello:446973883619213312>\n\nTo Get Started Use `<help` to View All Commands !\nMust Have a Channel Named `hello-logs` as the Log Channel\n\n**Useful Links:-**\nDiscord Bot List Vote :- https://discordbots.org/bot/445544179310002176\nSupport Server :- https://discord.gg/S6gDBqr\n\n:tada: **Enjoy ! Have Fun !**")
     await bot.send_message(channel, "**The bot has just joined a new server! :tada:**\n **Server name:** {}\n**Server Owner :**{}\n**Total members:** {:,}".format(server.name,server.owner,len(server.members)))
 
 @bot.event
@@ -43,29 +64,26 @@ async def on_server_remove(server):
 @bot.event
 async def on_member_join(member):
     server = member.server
-    if server.id == "433182340211146752":
-        #Test Server#
-        channel = bot.get_channel("433182340211146754")
-        server = member.server
-        msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
-        await bot.send_message(channel, msg)
+    if server.id == "418001869781205002":
+        if not member.avatar_url:
+            mem_ava = member.default_avatar_url
+        else:
+            mem_ava = member.avatar_url
 
-    elif server.id == "418001869781205002":
-        #Scanner#
         channel1 = bot.get_channel("418001869781205004")
-        server = member.server
-       
-        embed=discord.Embed(title="Welcome {}".fomrat(member.name), description="**:tada: Welcome to {} {} , You Are The {} User !**".format(member.server.name, member.mention, len(server.members)))
-        embed.set_author(name=member, icon_url=member.avatar_url)
+        embed=discord.Embed(title="Joined", description="\n\n:tada: Welcome **{}** to **{}** , Your the **{}** User !\n\n".format(member.server.name, member.mention, len(server.members)))
+        embed.set_author(name=member.name, icon_url=mem_ava)
+        embed.set_thumbnail(url=server.icon_url)
+        embed.set_footer(text=server.name , icon_url=server.icon_url)
         await bot.send_message(channel1, embed=embed)
-    
+
     elif server.id == "458206172940337190":
-        #Scanner#
+        #MSI#
         channe = bot.get_channel("458213198408056834")
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channe, msg)
-   
+
 
     elif server.id == "446967025773051905":
         #Hello SS#
@@ -73,29 +91,30 @@ async def on_member_join(member):
         server = member.server
         msg = "**<:Hello:446973883619213312> Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel1, msg)
-    
+
     elif server.id == "419567438452097027":
         #Games Server (Prince)#
         channel1 = bot.get_channel("419567438972059649")
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel1, msg)
-        await bot.send_message(member ,  "Hey There !\nOne of the Upcoming Servers on Tanki Discord Make Sure You Join There :wink: https://discord.gg/SsndPjB")
-    
+        x2 = bot.get_message("418004504206770176" , "461160883989774356")
+        await bot.send_message(member ,  x2)
+
     elif server.id == "454067549374775306":
         # Blitz Server #
         channel2 = bot.get_channel("454067549374775309")
         server = member.server
+        msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
+        await bot.send_message(channel2, msg)
 
-       msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
-       await bot.send_message(channel2, msg)
     elif server.id == "441893381397020673":
         #Alak
         channel2 = bot.get_channel("441895176953135105")
         server = member.server
         msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
         await bot.send_message(channel2,msg )
-        
+
     else:
         return
 
@@ -128,37 +147,21 @@ async def on_ready():
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.BadArgument):
-        await bot.send_message(ctx.message.channel," :x: Invalid Argument")
+        await bot.send_message(ctx.message.channel,"<:Fail:461924435176325120> Invalid Argument")
     elif isinstance(error, commands.CommandNotFound):
         chan =  bot.get_channel ("451695928336842753")
         await bot.send_message(chan, "{} Used Not Avalible Command On {} With Server ID {}" .format(ctx.message.author.mention , ctx.message.server.name , ctx.message.server.id))
     elif isinstance(error, commands.CheckFailure):
-        await bot.send_message(ctx.message.channel, "You Don't Have Enough  Permissions to Excute this Command ! :x:")
+        await bot.send_message(ctx.message.channel, "<:Fail:461924435176325120> You Don't Have Enough  Permissions to Excute this Command ! ")
     elif isinstance(error, discord.errors.Forbidden):
-        await bot.send_message(ctx.message.author , ":x: Missing Permissions to Excute the Command !")
+        await bot.send_message(ctx.message.author , "<:Fail:461924435176325120> Missing Permissions to Excute the Command !")
     elif isinstance(error, commands.CommandOnCooldown):
-        x =  await bot.send_message(ctx.message.channel, "**Spam Alert !**\n\n{} , {}".format(ctx.message.author.mention , error))
+        x =  await bot.send_message(ctx.message.channel, "<:Fail:461924435176325120> **Spam Alert !**\n\n{} , {}".format(ctx.message.author.mention , error))
         await asyncio.sleep(5)
         await bot.delete_message(x)
-
     else:
-        await bot.send_message(ctx.message.author, "Something is Wrong ! :x:")
+        await bot.send_message(ctx.message.author, "<:Fail:461924435176325120> Something is Wrong ! ")
 
-bot.remove_command("help")
-@bot.command(pass_context=True)
-async def help(ctx):
-    embed=discord.Embed(title="Help is Here (Prefix "<")", url="https://discord.gg/SsndPjB")
-    embed.set_author(name="Help", icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    embed.add_field(name="<:discord:450901180097363968> Discord Daily Commands", value="`afk-back` - Set a AFK Status\n`count` - Tell How Many Messages You have Sent in The Channel\n`serverinv` - Gives You a Server Invite of the Server\n`servericon` - Bring Out the Server Icon\n`serverinfo` - Shows Server Information\n`avatar` - Shows the Avatar of a User\n`userinfo` - Shows Info of a User", inline=True)
-    embed.add_field(name=":trophy:  Moderation Commands", value="`clear` - Delete Bulk-Messages\n`getbans` - Gives a Banned Members List\n`cmute` - Mutes a User in a Channel<:Premium:447648813331513354>\n`cunmute` - Unmutes the Muted user in the Channel<:Premium:447648813331513354>\n`smute` - Mute a User in Server <:Premium:447648813331513354>\n`sunmute` - Unmutes the user muted in the Server <:Premium:447648813331513354>\n`report` - Send a Report Message for a Certain Channel <:Premium:447648813331513354>\n`ban` - Ban Members in the Server <:Premium:447648813331513354>\n`kick` - Kicks a User from the Server <:Premium:447648813331513354>\n`warn` - Warn a User <:Premium:447648813331513354>", inline=False)
-    embed.add_field(name=":joy: Fun Commands", value="`yay` - IDK You Check!\n`virus` - Send a Virus to Your Friend\n`insult` - Insult a User By Mentioning Them\n`lovecal` - Check Love Percentage Between You and Your Friend\n`troll` - Test the Command :)\n`hug` - Hug a User\n`rps paper` - Play R.P.S With the Bot\n`rps rock` - Play R.P.S With the Bot\n`rps scissor` - Play R.P.S With the Bot\n`8ball` - Ask a 8Ball Question\n`tell` - Say Something as the Bot", inline=False)
-    embed.add_field(name="<:tanki:447387948086722560> Tanki Online Commands", value="`open10` - Open 10 Containers :)\n`open1` - Open a Conatiner\n`tankibot` - Gives the Invite Link of the Tanki Bot\n`play` - Get The Tanki Online Playing Link\n`tolinks`  - All Tanki Useful Links\n`vlog`- Check the latest Tanki V-LOG", inline=False)
-    embed.add_field(name=":robot: Bot Info Commands", value="`info` - Gives Some Info About the Bot\n`ping` - Check the bot response time\n`uptime` - Check the Uptime of the bot\n`reqpre` - Request Premium and Check Advantages\n`support` - Gives You Support Info\n`askhelp` - Ask Help From Bot Owners\n`invite` - Get the Invite Link Other Links of the Bot", inline=True)
-    embed.add_field(name=":information_source: Information", value="`reqpre` - Request Hello Premium \n<:Premium:447648813331513354> This Type Of Commands Work Only For Premium Users ($1) Month Per User , ($3) For a Server", inline=True)
-    embed.set_footer(text="Hello Bot | 2018 | Scanner #4797 | Help" ,icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    await bot.send_message(ctx.message.author , embed=embed)
-    await bot.say("Check DM's :white_check_mark:")
 
 @bot.event
 async def on_message(message):
@@ -166,85 +169,11 @@ async def on_message(message):
         return
     if message.author.bot:
         return
-    if not message.server:
-        await bot.send_message(message.channel,random.choice(["Hey !" ,"How Are You ?" , "Do you have a Girl ?", "Yes" ,"Why" , "Lmao" , "Hey Commands Dont Work Here !", "Use <support to Join My Support Server " , "Thank You" , "My Owner is Scanner#4797" , "Use <help to View all Commands :)"]))
-   
-    elif message.content.startswith('<report'):
-        if message.server.id == "418001869781205002":
-            #Scanner's Server
-            text = message.content[len('<report'):].strip()
-            repchan = bot.get_channel("419143404631621652")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
-       
-        elif message.server.id == "419567438452097027":
-            #Games Prince
-            text = message.content[len('<report'):].strip()
-            repchan = bot.get_channel("428191385557139456")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
-        elif message.server.id == "455262107277983754":
-            #Games Prince
-            text = message.content[len('<report'):].strip()
-            repchan = bot.get_channel("455268577537425409")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
-        
-        elif message.server.id == "454067549374775306":
-            #Blitz Server
-            text = message.content[len('<report'):].strip()
-            repchan = bot.get_channel("454672929612103690")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Report Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Report:-** {}".format(message.author.mention , text))
-
-        else:
-            await bot.send_message(message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
-
-    elif message.content.startswith('<suggest'):
-        if message.server.id == "418001869781205002":
-            #Scanner
-            text = message.content[len('<suggest'):].strip()
-            repchan = bot.get_channel("439368852057620480")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Suggestion Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Suggestion:-** {}".format(message.author.mention , text))
-            
-        elif message.server.id == "454067549374775306":
-            #Blitz
-            text = message.content[len('<suggest'):].strip()
-            repchan = bot.get_channel("454366535302250497")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Suggestion Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Suggestion:-** {}".format(message.author.mention , text))
-        elif message.server.id == "455262107277983754":
-            #Blitz
-            text = message.content[len('<suggest'):].strip()
-            repchan = bot.get_channel("455268610211053570")
-            await bot.delete_message(message)
-            await bot.send_message(message.channel , "{} , Your Suggestion Was Sent In !".format(message.author.mention))
-            await bot.send_message(repchan ,"**User:-** {}\n**Suggestion:-** {}".format(message.author.mention , text))
-
-
-        else:
-            await bot.send_message(message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
-
 
     elif message.content.startswith('<uptime'):
         embed=discord.Embed()
         embed.add_field(name="Uptime", value=":clock10: **|** I Have Been Online For **{0}** Hour(s) and **{1}** Minute(s) !".format(hour , minutes), inline=True)
         await bot.send_message(message.channel , embed=embed)
-
-    elif message.content.startswith('<reqpre'):
-        text = message.content[len('<reqpre'):].strip()
-
-        pre = bot.get_channel("451696819638894592")
-        await bot.send_message(message.channel ,"Your Request Has Been Sent ! :tada:\nGood Luck For The Approval ! ")
-        await bot.send_message(pre ,"User:- {}\nID:- {}\nMessage:- {} ".format(message.author.mention , message.author.id ,text))
-        await bot.delete_message(message)
 
     elif message.content.startswith('<count'):
         embed=discord.Embed(description="**Searching Messages Sent** <a:loading:438280917363195905>\n\nThis May Take Some Time !")
@@ -316,27 +245,6 @@ async def on_message(message):
             await bot.send_message(message.channel ,"{}".format(text))
             await bot.delete_message(message)
 
-    elif message.content.startswith('<reqreport'):
-        if message.author.id == message.server.owner.id:
-            if message.server.id == "418001869781205002":
-                #SS
-                await bot.send_message(message.channel , "Your Server Has Report Command Already ! :x:")
-            elif message.server.id == "419567438452097027":
-                #PR
-                await bot.send_message(message.channel , "Your Server Has Report Command Already ! :x:")
-
-            else:
-                name = message.content[len("<reqreport"):].strip()
-                chann = bot.get_channel("450276717614071809")
-                invitelinknew = await bot.create_invite(destination =message.channel, xkcd = True, max_uses = 100)
-                await bot.send_message(chann ,"New Request\n\n**Server Name:-**{}\n**Server ID:-**{}".format(message.server.name , message.server.id))
-                await bot.send_message(chann ,"**Text:-** {}".format(name))
-                await bot.send_message(chann ,"**Link:-** {}".format(invitelinknew))
-                await bot.send_message(message.author ,"Hey There !\nYou Have Request Report Command For \n\n**Server Name:-** {}\n**Owner Name:-**{}\n Please Be Patient Until We Do it !\nYou Will Get a Message Once it is Done ! , Thank You ! ".format(message.server.name , message.server.owner.name))
-                await bot.send_message(message.channel,"Success \nI Sent a Message to My Technical Team !")
-        else:
-            await bot.send_message(message.channel , "Your Are Not the Server Owner to Do this Command ! :x:")
-
     elif message.content.startswith('<afk'):
         name = message.content[len("<afk"):].strip()
         if "@everyone" in name:
@@ -354,7 +262,7 @@ async def on_message(message):
 
         await bot.send_message(message.channel, "Welcome Back **{}** , I Removed Your AFK Status".format (message.author.name))
 
-    elif message.content.startswith('<Hey Hello'):
+    elif message.content.upper().startswith('<Hey Hello'):
         if message.author.id == "429118689367949322":
             await bot.send_message(message.channel, "Hey {} !\n**Owner , Technical Staff , Suppport Team** ".format(message.author.mention))
 
@@ -362,60 +270,38 @@ async def on_message(message):
               await bot.send_message(message.channel,"Hey {} !\n **Player**".format(message.author.mention))
 
     await bot.process_commands(message)
-
 @bot.command(pass_context=True)
-async def vlog (ctx):
-    message = ctx.message
-    embed=discord.Embed(title="Episode #174")
-    embed.set_author(name="Tanki Online V-LOG", icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    embed.add_field(name="Link ...", value="[Click Here](https://www.youtube.com/watch?v=H2e4msli2cc)", inline=True)
-    embed.set_footer(text="Tanki Online | Hello | 2018 | Not Updated , Let Us Know !", icon_url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
-    await bot.send_message(message.channel,embed=embed)
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def reqpre (ctx , *args):
+    txt = ' '.join(args)
+    pre = bot.get_channel("451696819638894592")
+    await bot.send_message(ctx.message.channel ,"Your Request Has Been Sent ! <:Pass:461924196390404106>\nGood Luck For The Approval ! ")
+    await bot.send_message(pre ,"User:- {}\nID:- {}\nMessage:- {} ".format(message.author.mention , message.author.id ,text))
+    await bot.delete_message(message)
+
 
 @bot.command(pass_context=True)
 async def test (ctx):
-    await bot.say(":white_check_mark: **Worked !**")
+    await bot.say("<:Pass:461924196390404106> **Worked !**")
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def askhelp (ctx):
     try:
         text = ctx.message.content[len('<askhelp'):].strip()
         channel = bot.get_channel("451695948704382978")
         await bot.delete_message(ctx.message)
-        await bot.send_message(ctx.message.channel, "{} Your Message Has Been Sent In !" .format(ctx.message.author.mention))
-        await bot.send_message(ctx.message.author, "**Hey There !**\nWe Successfully Recorded You Issue !\n\n Issue ID :- {}\n Please be Patient... Until We Check !".format(ctx.message.server.id))
+        await bot.send_message(ctx.message.channel, "{}  , Your Message Has Been Sent In ! <:Pass:461924196390404106>" .format(ctx.message.author.mention))
+        await bot.send_message(ctx.message.author, "**Hey There !** <:Pass:461924196390404106> \nWe Successfully Recorded You Issue !\n\n Please be Patient... Until We Check !")
         await bot.send_message(channel,"**User:-** <@{}>\n**Server:-** {} , {} \n**Problem:-** {}".format(ctx.message.author.id, ctx.message.server.name , ctx.message.server.id ,text))
     except:
-        await bot.say(":x: Something is Wrong ! , Please Try Again !")
+        await bot.say("<:Fail:461924435176325120> Something is Wrong ! , Please Try Again !")
 
-@bot.command(pass_context = True)
-@commands.has_permissions(manage_channels=True)
-async def warn(ctx, member : discord.Member):
-    if ctx.message.server.id == "418001869781205002":
-        #SCANNER'SERVER
-        log = bot.get_channel("453846059404492811")
-        txt = ctx.message.content[len('<warn'):].strip()
-        await bot.delete_message(ctx.message)
-        await bot.say("***{} WAS WARNED*** :white_check_mark:".format(member))
-        await bot.send_message(log , ":warning: Warned !\n\n\n**User:-**{}\n**Admin/Mod:-**{}\n**Reason:-**{}".format(member.mention ,ctx.message.author.mention, txt))
-        await bot.send_message(member ,"You Were Warned In {} , {}".format(ctx.message.server.name , txt))
-    
-    elif ctx.message.server.id == "454067549374775306":
-        #Blitz
-        log = bot.get_channel("454673233996939269")
-        txt = ctx.message.content[len('<warn'):].strip()
-        await bot.delete_message(ctx.message)
-        await bot.say("***{} WAS WARNED*** :white_check_mark:".format(member))
-        await bot.send_message(log , ":warning: Warned !\n\n\n**User:-**{}\n**Admin/Mod:-**{}\n**Reason:-**{}".format(member.mention ,ctx.message.author.mention, txt))
-        await bot.send_message(member ,"You Were Warned In {} , {}".format(ctx.message.server.name , txt))
-
-    else:
-        await bot.send_message(ctx.message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
-    
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def battle(ctx , user : discord.Member = None):
-     
+
     team = random.choice([ctx.message.author.name , user.name])
     team2 = random.choice([ctx.message.author.name , user.name])
     team3 = random.choice([ctx.message.author.name , user.name])
@@ -473,7 +359,7 @@ async def battle(ctx , user : discord.Member = None):
 
 
 
-        
+
 
 @bot.command(pass_context = True)
 async def checkrep(ctx, user : discord.Member):
@@ -493,28 +379,10 @@ async def checksug(ctx, user : discord.Member):
     else:
         return
 
-
 @bot.command(pass_context = True)
-@commands.has_permissions(manage_channels=True)
-async def cmute(ctx, *, member : discord.Member):
-    '''Mutes A Memeber'''
-    #user_roles = [r.name.lower() for r in ctx.message.author.roles]
-
-    #if "admin" not in user_roles:
-    #    return await client.say("You do not have the role: Admin")
-
-    await bot.send_message(ctx.message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
-
-#Unmutes a member
-
-@bot.command(pass_context = True)
-@commands.has_permissions(manage_channels=True)
-async def cunmute(ctx, *, member : discord.Member):
-    await bot.send_message(ctx.message.channel , ":x: This Server or The User Doesn't Have Hello Premium to Excute this Command <:Premium:447648813331513354>")
-
-@bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def dropgold(ctx):
-    embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Dropped a Gold Box ".format(ctx.message.author.name), color=0xff8040)
+    embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Dropped a Gold Box ".format(ctx.message.author.name), color=0xfce700)
     await bot.say(embed=embed)
 
     await asyncio.sleep(0.5)
@@ -522,25 +390,23 @@ async def dropgold(ctx):
     if msg.author.id == bot.user.id:
         return
     else:
-        embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Taken the Gold Box ".format(msg.author.name), color =0xff8040)
+        embed = discord.Embed(description = "<:gold:419067513712672769> **| {}** Has Taken the Gold Box ".format(msg.author.name), color =0xfce700)
         await bot.say(embed=embed)
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def premium(ctx):
     await bot.say("**Hello Premium <:Premium:447648813331513354>**\nAllows You To Use Premium Commands\nType `<help` To Check premuim Commands\n$1 For a User , $3 For a Server ")
 
 
 @bot.command(pass_context=True)
-async def yay(ctx):
-    await bot.say("https://media.giphy.com/media/3kvYEldEEr0DC/giphy.gif")
-
-
-@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def tolinks(ctx):
-    await bot.send_message(ctx.message.channel,"**Tanki Online Useful Links**\n\nTanki Online Official :- https://tankionline.com/\nTanki Online Ratings :-https://ratings.tankionline.com/en/\nTanki Online Forum :-https://en.tankiforum.com/\nTanki Online Wiki :-https://en.tankiwiki.com/Tanki_Online_Wiki/\nTanki Online Help:- https://help.tankionline.com/\n\n **Tanki Online EN | Hello 2018**")
+    await bot.send_message(ctx.message.channel,"**Tanki Online Useful Links :link:**\n\nTanki Online Official :- https://tankionline.com/\nTanki Online Ratings :-https://ratings.tankionline.com/en/\nTanki Online Forum :-https://en.tankiforum.com/\nTanki Online Wiki :-https://en.tankiwiki.com/Tanki_Online_Wiki/\nTanki Online Help:- https://help.tankionline.com/\n\n **Tanki Online EN | Hello 2018**")
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def servericon(ctx):
     embed=discord.Embed(title="{} Icon URL".format(ctx.message.server.name), url="https://cdn.discordapp.com/avatars/445544179310002176/6843573388ba5ae8092b234c8b35bc2e.webp?size=1024")
     embed.set_image(url=ctx.message.server.icon_url)
@@ -548,18 +414,10 @@ async def servericon(ctx):
     embed.set_footer(text="Requested By {} | {}".format(ctx.message.author.name , ctx.message.server.name) , icon_url=ctx.message.author.avatar_url)
     await bot.say(embed=embed)
 
-@bot.command(pass_context=True)
-@commands.has_permissions(ban_members=True)
-async def ban (ctx):
-    await bot.say(":x: Sorry Something is Wrong !")
-
-@bot.command(pass_context=True)
-@commands.has_permissions(ban_members=True)
-async def kick (ctx):
-    await bot.say(":x: Sorry Something is Wrong !")
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def serverinfo(ctx):
     server = ctx.message.server
     text_channels = len([x for x in server.channels
@@ -584,20 +442,21 @@ async def serverinfo(ctx):
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def avatar(ctx, user: discord.Member = None):
     if not user:
         if not ctx.message.author.avatar_url:
             embed=discord.Embed()
-            embed.set_author(name="{}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.default_avatar_url))
             embed=discord.Embed(title="Your Avatar Link", url="{}".format(ctx.message.author.default_avatar_url), color=0x070707)
+            embed.set_author(name="{}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.default_avatar_url))
             embed.set_image(url=ctx.message.author.default_avatar_url)
             embed.set_footer(text="{}".format(ctx.message.server.name),icon_url="{}".format(ctx.message.server.icon_url))
             await bot.say(embed=embed)
 
         else:
             embed=discord.Embed()
-            embed.set_author(name="{}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
             embed=discord.Embed(title="Your Avatar Link", url="{}".format(ctx.message.author.avatar_url), color=0x070707)
+            embed.set_author(name="{}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
             embed.set_image(url=ctx.message.author.avatar_url)
             embed.set_footer(text="{}".format(ctx.message.server.name),icon_url="{}".format(ctx.message.server.icon_url))
             await bot.say(embed=embed)
@@ -620,11 +479,17 @@ async def avatar(ctx, user: discord.Member = None):
             await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def userinfo(ctx, user: discord.Member = None):
     if user is None:
-        embed=discord.Embed(title="{}'s Information".format(ctx.message.author.name), url=ctx.message.author.avatar_url)
+        if not ctx.message.author.avatar_url:
+            avatar = ctx.message.author.default_avatar_url
+        else:
+            avatar = ctx.message.author.avatar_url
+
+        embed=discord.Embed(title="{}'s Information".format(ctx.message.author.name), url=avatar)
         embed.set_author(name=ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        embed.set_thumbnail(url=ctx.message.author.display.avatar_url)
+        embed.set_thumbnail(url=avatar)
         embed.add_field(name="User Name", value=ctx.message.author.name, inline=True)
         embed.add_field(name="User Tag", value="#" + ctx.message.author.discriminator, inline=True)
         embed.add_field(name="User ID", value=ctx.message.author.id, inline=True)
@@ -636,9 +501,14 @@ async def userinfo(ctx, user: discord.Member = None):
         await bot.say(embed=embed)
 
     else:
-        embed=discord.Embed(title="{}'s Information".format(user.name), url=user.avatar_url)
+        if not user.avatar_url:
+            ava = user.default_avatar_url
+        else:
+            ava = user.avatar_url
+
+        embed=discord.Embed(title="{}'s Information".format(user.name), url=ava)
         embed.set_author(name=user.name, icon_url=user.avatar_url)
-        embed.set_thumbnail(url=user.avatar_url)
+        embed.set_thumbnail(url=ava)
         embed.add_field(name="User Name", value=user.name, inline=True)
         embed.add_field(name="User Tag", value="#" + user.discriminator, inline=True)
         embed.add_field(name="User ID", value=user.id, inline=True)
@@ -650,6 +520,7 @@ async def userinfo(ctx, user: discord.Member = None):
         await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def hug(ctx, *, member: discord.Member = None):
     try:
         if member is None:
@@ -660,22 +531,39 @@ async def hug(ctx, *, member: discord.Member = None):
             else:
                 await bot.say(ctx.message.author.mention + " Has Hugged " + member.mention + "! :heart:")
     except:
-        await bot.say("**Eww Something Went Wrong** :x:")
+        await bot.say("Something Went Wrong <:Fail:461924435176325120>")
 
 @bot.command(pass_context=True)
-async def lovecal(ctx , user: discord.Member = None):
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def gaycal(ctx , user :discord.Member =  None):
     if user is None:
-        await bot.say(":x: Mention a User to Check The Love Percentage")
-    if user.id == ctx.message.author.id:
-        embed=discord.Embed(color=0x040404)
-        embed.add_field(name=":heart: Love Calculator",value="Love Percentage between {} and {}\n **0%**".format(ctx.message.author.mention , user.mention), inline=False)
-        await bot.send_message(ctx.message.channel,embed=embed)
+        await bot.say("<:Fail:461924435176325120> Mention a User to Check Gay Percentage !")
+    
     else:
-        embed=discord.Embed(color=0x040404)
-        embed.add_field(name=":heart: Love Calculator", value="Love Percentage between {} and {}\n **{}%**".format(ctx.message.author.mention , user.mention , random.randint(1,100)), inline=False)
-        await bot.send_message(ctx.message.channel,embed=embed)
+        embed=discord.Embed(title="Calculator ", description="**{}** is **{}%** Gay ".format(user.name , random.randint(1 , 100)))
+        embed.set_author(name="Gay", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/462845519925084163/tumblr_p8us2iXWsD1viisjvo1_500.png")
+        embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+        await bot.say(embed=embed)
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def lovecal(ctx , user1 :discord.Member =  None, user2 :discord.Member = None):
+    if user1 is None:
+        await bot.say("<:Fail:461924435176325120> Mention the First User to Check with Other")
+    if user2 is None:
+        await bot.say("<:Fail:461924435176325120> Mention the Second User Also !")
+    if user1.id and user2.id == ctx.message.author.id:
+        await bot.say("<:Fail:461924435176325120> I Can't Let You Do That ! xD") 
+            
+    else:
+        embed=discord.Embed(title="Calcualtor ", description="Love Between **{}** and **{}** is \n**{}%**".format(user1.name , user2.name , random.randint(1 , 100)))
+        embed.set_author(name="Love", icon_url="https://cdn.discordapp.com/attachments/418001869781205004/462843460052058132/images.png")
+        embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+        await bot.say(embed=embed)
+
 
 @bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def play(ctx):
     embed=discord.Embed(title="Go Ahead Play Tanki Click The Link ", url="https://tankionline.com/battle-en.html#/", color=0x070707)
     embed.set_author(name="Play Tanki Online ", icon_url="https://cdn.discordapp.com/attachments/433182340211146754/447402587822620673/8475ec065fffc1db1d0a9470a529ce67.jpg")
@@ -684,6 +572,7 @@ async def play(ctx):
     await bot.say(embed=embed)
 
 @bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def invite(ctx):
     embed=discord.Embed(title="Invite Links", url="https://discord.gg/UWsfvzK", color=0x0d0d0d)
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/445178799932440576/6843573388ba5ae8092b234c8b35bc2e.jpg?size=2048")
@@ -697,6 +586,7 @@ async def invite(ctx):
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def serverinv(ctx):
     invitelinknew = await bot.create_invite(destination = ctx.message.channel, xkcd = True, max_uses = 100)
     await bot.send_message(ctx.message.channel , "Here is a Invite Link For {}\nMax Uses 100\n{}".format(ctx.message.server.name , invitelinknew))
@@ -711,6 +601,7 @@ async def servers(ctx):
 
 @bot.command(pass_context = True)
 @commands.has_permissions(ban_members=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def getbans(ctx):
     if not ctx.message.author.server_permissions.administrator:
         return
@@ -723,7 +614,8 @@ async def getbans(ctx):
 
 
 @bot.command(pass_context=True)
-@commands.has_permissions(kick_members=True)
+@commands.has_permissions(manage_messages=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def clear(ctx, number):
     mgs = []
     number = int(number) #Converting the amount of messages to delete to an integer
@@ -733,44 +625,10 @@ async def clear(ctx, number):
 
 
 @bot.command(pass_context=True)
-async def eye(ctx):
-    chan = ctx.message.channel
-    x = await bot.send_message(chan , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "O.o xD")
-    await asyncio.sleep(1)
-    x = await bot.edit_message(x , "o.O xD")
-
-@bot.command(pass_context=True)
 @commands.cooldown(1, 30, commands.BucketType.user)
-
 async def virus(ctx, user: discord.Member = None):
     if user is None:
-        await bot.say(":x: Mention a User to Send Virus ! ")
+        await bot.say("<:Fail:461924435176325120> Mention a User to Send Virus ! ")
     else:
         chan = ctx.message.channel
         x = await bot.send_message(chan , "<a:loading:438280917363195905> Packing Files.")
@@ -795,17 +653,141 @@ async def virus(ctx, user: discord.Member = None):
         await bot.send_message(user , ":warning: **Alert !** :warning:\n\nYou May Have Been Hacked ! , `{}-Virus.exe` Have Been Found on Your Operating System.\nYour Data May Have Been Compromised. Please re-install Your OS Immediately.".format(ctx.message.author.name))
         await bot.delete_message(ctx.message)
 
+@bot.command(pass_context=True)
+async def meme (ctx):
+    memeran = random.choice(['https://i.imgur.com/hpB7qvi.png', 'https://i.imgur.com/vJ2TQwr.png',
+                'https://i.imgur.com/m64uuhm.png', 'https://i.imgur.com/mMDZhos.png',
+                'https://i.imgur.com/D2YNENN.png', 'https://media.giphy.com/media/aFTt8wvDtqKCQ/giphy.gif',
+                'https://i.imgur.com/aNGHGzt.jpg', 'https://i.imgur.com/UWHgThx.jpg',
+                'https://media.giphy.com/media/3oKIPmlzy5iyOyOyzK/giphy.gif', 'https://media.giphy.com/media/26gs6vEzlpaxuYgso/giphy.gif'])
+
+    embed=discord.Embed()
+    embed=discord.Embed(title="Here is a Meme For You ! ")
+    embed.set_author(name="Meme Requested By {}".format(ctx.message.author.name) ,icon_url=ctx.message.author.avatar_url)
+    embed.set_image(url=memeran)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
+async def cat (ctx):
+    catcho = random.choice(['https://i.imgur.com/cnnG586.jpg', 'https://i.imgur.com/W5teHHG.png',
+                'https://i.imgur.com/MUoXqDB.jpg', 'https://i.imgur.com/sLydwrm.jpg',
+                'https://i.imgur.com/CCl6UOO.jpg', 'https://i.imgur.com/W0o3IIB.jpg',
+                'https://i.imgur.com/0bLSY1H.jpg', 'https://i.imgur.com/l2UeDeA.jpg'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title=" Here is a Cute Cat For You ! :cat:", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Cat Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=catcho)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+@bot.command(pass_context=True)
+async def cheer(ctx):
+    cher = random.choice(['https://media.giphy.com/media/TPkLd5oec1SzS/giphy.gif', 'https://media.giphy.com/media/m8Z2UqDYU20SY/giphy.gif',
+                'https://media.giphy.com/media/xUPGcFeJiX8IImdEsw/giphy.gif', 'https://media.giphy.com/media/9DnHPHLhcgEVb3981r/giphy.gif',
+                'https://media.giphy.com/media/xWDomsFyDpfy2G7rpx/giphy.gif', 'https://media.giphy.com/media/3oz8xEXgWWnUXIQI4o/giphy.gif',
+                'https://media.giphy.com/media/9EoQM8QF6asUg/giphy.gif', 'https://media.giphy.com/media/8Fy7FayJ6Cjja/giphy.gif'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title=" Here is a Cheer For You ! :tada:", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Cheer Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=cher)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+@bot.command(pass_context=True)
+async def cry(ctx):
+    cy = random.choice(['https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif', 'https://media.giphy.com/media/L95W4wv8nnb9K/giphy.gif',
+                'https://media.giphy.com/media/5WmyaeDDlmb1m/giphy.gif', 'https://media.giphy.com/media/4bBLOhnMb0vHG/giphy.gif',
+                'https://media.giphy.com/media/MSgJnzNSMGBc6BpGIc/giphy.gif', 'https://media.giphy.com/media/Ph8OWoJA2M3eM/giphy.gif'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title=" Very Sad ! :cry: ", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Cry Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=cy)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+@bot.command(pass_context=True)
+async def party(ctx):
+    cyd = random.choice(['https://media.giphy.com/media/3rgXBQIDHkFNniTNRu/giphy.gif', 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
+                'https://media.giphy.com/media/MS3XuWjQV1FiU/giphy.gif', 'https://media.giphy.com/media/xT8qAY7e9If38xkrIY/giphy.gif',
+                'https://media.giphy.com/media/s2qXK8wAvkHTO/giphy.gif', 'https://media.giphy.com/media/l4pTfx2qLszoacZRS/giphy.gif',
+                'https://media.giphy.com/media/YTbZzCkRQCEJa/giphy.gif', 'https://media.giphy.com/media/7vQZanyufdRe0/giphy.gif',
+                'https://media.giphy.com/media/3KC2jD2QcBOSc/giphy.gif', 'https://media.giphy.com/media/10hO3rDNqqg2Xe/giphy.gif',
+                'https://media.giphy.com/media/l41Yy2XyXWlSvupl6/giphy.gif', 'https://media.giphy.com/media/xUNd9HAossTNDyUUbS/giphy.gif',
+                'https://media.giphy.com/media/bj09BK2BzLLQk/giphy.gif', 'https://media.giphy.com/media/AuMt534EY2Ahy/giphy.gif'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title="Let's Party ! :tada: ", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Party Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=cyd)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+
+@bot.command(pass_context=True)
+async def fortnite_dance (ctx):
+    catfcho = random.choice(['https://media.giphy.com/media/1lwSiygGzLuk8cynYS/giphy.gif', 'https://media.giphy.com/media/4TrJMNlfxyg2H2nhx0/giphy.gif',
+                            'https://media.giphy.com/media/pzKRxS42FLK81ZPz5C/giphy.gif', 'https://media.giphy.com/media/SG5paY6WxH6Ki2lWys/giphy.gif',
+                            'https://media.giphy.com/media/fs6gcc4CxMTY5bAGyn/giphy.gif', 'https://media.giphy.com/media/1fmA4DHlleNG016sLE/giphy.gif',
+                            'https://media.giphy.com/media/cNDb41n8Xv7C5j6hOO/giphy.gif', 'https://media.giphy.com/media/AhXOqQ7ts5J8Ri6V6P/giphy.gif'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title=" Here is a Fortnite Dance For You ! <:verified:419067353545048064>", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Dance Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=catfcho)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+
+@bot.command(pass_context=True)
+async def fortnite_drop (ctx):
+    fdrop = random.choice(['Anarchy Acres','Dsuty Divot','Fatal Fields','Flush Factory','Greasy Grove','Haunted Hills','Junk Junktion','Lonely Lodge',
+                                'Loot Lake','Lucky Landing','Moisty Mire','Pleasant Park','Retail Row','Risky Reels','Salty Springs','Shifty Shafts','Snobby Shores',
+                                'Tilted Towers','Tomato Town','Wailing Woods'])
+
+    embed=discord.Embed(title="You Should Drop ", url="https://cdn.discordapp.com/attachments/418005628255207424/462605605451071488/E7sI6zfOcqLf29xXX3311RL6F0MmTsvZkWhLAAAAAElFTkSuQmCC.png", description="\n**{}**\n".format(fdrop))
+    embed.set_author(name="Fortnite Drop", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/462605605451071488/E7sI6zfOcqLf29xXX3311RL6F0MmTsvZkWhLAAAAAElFTkSuQmCC.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/418005628255207424/462605605451071488/E7sI6zfOcqLf29xXX3311RL6F0MmTsvZkWhLAAAAAElFTkSuQmCC.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.say(embed=embed)
+
+
+@bot.command(pass_context=True)
+async def dog (ctx):
+    dogcho = random.choice(['https://i.imgur.com/WcjwkUc.jpg', 'https://i.imgur.com/HSfhT9I.jpg',
+                    'https://i.imgur.com/o2ryxRR.jpg', 'https://i.imgur.com/uBF6wqR.jpg',
+                    'https://i.imgur.com/3Pu3DWL.jpg', 'https://i.imgur.com/4eVcOst.jpg',
+                    'https://i.imgur.com/ypfT4Yn.jpg', 'https://i.imgur.com/AZpS0pF.jpg'])
+
+
+    embed=discord.Embed()
+    embed=discord.Embed(title=" Here is a Cute Dog For You ! :dog:", url="{}".format(ctx.message.author.avatar_url))
+    embed.set_author(name="Dog Requested By {}".format(ctx.message.author.name), icon_url="{}".format(ctx.message.author.avatar_url))
+    embed.set_image(url=dogcho)
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def troll(ctx, user: discord.Member = None):
     if user is None:
-        await bot.send_message(ctx.message.channel,":x: Mention a User to Troll !")
+        await bot.send_message(ctx.message.channel,"<:Fail:461924435176325120> Mention a User to Troll !")
 
     else:
         await bot.send_message(ctx.message.channel,"{} **WAS BANNED** <a:TROLLDANCE:437631542446129163>  ".format(user.mention))
         await bot.delete_message(ctx.message)
 
 @bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def ping(ctx):
     pingtime = time.time()
     embed=discord.Embed(description="**Pong !...**")
@@ -816,15 +798,293 @@ async def ping(ctx):
     await bot.edit_message(pingms,embed=embed)
 
 @bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def support(ctx):
     await bot.say("Need Help ? **Join Support Server :-** https://discord.gg/S6gDBqr, \n**Use the Special Command** `<askhelp <Your Question>` <a:yo:445638905874743302>")
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def tankibot (ctx):
     await bot.say("**{}** , Here is the Best Bot I Would Recommend for Tanki Online\nLink :-https://discordbots.org/bot/408439037771382794\nBot Server:- https://discord.gg/cDH6VJg".format(ctx.message.author.name))
 
+@bot.command(pass_context=True)
+@commands.has_permissions(kick_members=True)
+async def kick (ctx ,user : discord.Member = None , *args):
+    channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+    kReason = ' '.join(args)
+    try:
+        if user is None:
+            await bot.say("<:Fail:461924435176325120> Mention a User to Kick !")
+        else:
+            if channel:
+                if not user.avatar_url:
+                    avaa = user.default_avatar_url
+                else:
+                    avaa = user.avatar_url
+                embed=discord.Embed(title="{} Was Kicked".format(user.name))
+                embed.set_author(name=user.name, icon_url=avaa)
+                embed.set_thumbnail(url=avaa)
+                embed.add_field(name="User Name", value=user.name, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Channel", value="<#{}>".format(ctx.message.channel.id), inline=True)
+                embed.add_field(name="Reason", value=kReason, inline=False)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel , embed=embed)
+                await bot.kick(user)
+                await bot.say("**{}** Was Kicked From **{} |** <:Pass:461924196390404106> ".format(user , ctx.message.server.name))
+                await bot.send_message(user, "You Were Kicked From {} , {}".format(ctx.message.server.name , kReason))
+            else:
+                await bot.delete_message(ctx.message)
+                await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+                await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel(Required) , Try Again The Command !") #
+    except:
+        await bot.say("<:Fail:461924435176325120> Something is Wrong !")
 
 @bot.command(pass_context=True)
+@commands.has_permissions(kick_members=True)
+async def ban (ctx ,user : discord.Member = None , *args):
+    channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+    kReason = ' '.join(args)
+    try:
+        if user is None:
+            await bot.say("<:Fail:461924435176325120> Mention a User to Ban !")
+        else:
+            if channel:
+                if not user.avatar_url:
+                    avaa = user.default_avatar_url
+                else:
+                    avaa = user.avatar_url
+                embed=discord.Embed(title="{} Was Banned".format(user.name))
+                embed.set_author(name=user.name, icon_url=avaa)
+                embed.set_thumbnail(url=avaa)
+                embed.add_field(name="User Name", value=user.name, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Channel", value="<#{}>".format(ctx.message.channel.id), inline=True)
+                embed.add_field(name="Reason", value=kReason, inline=False)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel , embed=embed)
+                await bot.ban(user)
+                await bot.say("**{}** Was Banned From **{} |** <:Pass:461924196390404106> ".format(user , ctx.message.server.name))
+                await bot.send_message(user, "You Were Banned From {} , {}".format(ctx.message.server.name , kReason))
+            else:
+                await bot.delete_message(ctx.message)
+                await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+                await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel(Required) , Try Again The Command !") #
+    except:
+        await bot.say("<:Fail:461924435176325120> Something is Wrong !")
+
+
+
+
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_channels=True)
+async def c_mute (ctx , user:discord.Member = None , *args):
+   channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+   reason = ' '.join(args)
+   try:
+        if channel:
+            if user is None:
+                await bot.say("<:Fail:461924435176325120> Mention a User to Mute in the Channel !")
+            else:
+                if user.avatar_url:
+                    ava = user.avatar_url
+                else:
+                    ava = user.default_avatar_url
+                if reason == "":
+                    await bot.say("<:Fail:461924435176325120> Provide a Reason !")
+
+                overwrite = discord.PermissionOverwrite()
+                overwrite.read_messages = True
+                overwrite.send_messages = False
+                await bot.edit_channel_permissions(ctx.message.channel, user, overwrite)
+                embed=discord.Embed(title="{} Was Muted In Channel".format(user.name))
+                embed.set_author(name=user.name, icon_url=user.avatar_url)
+                embed.set_thumbnail(url=ava)
+                embed.add_field(name="User Name", value=user.name, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Channel", value="<#"+ctx.message.channel.id+">", inline=True)
+                embed.add_field(name="Reason", value=reason, inline=False)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel, embed=embed)
+                await bot.say("**{}** Was Muted in This Channel In **{} |** <:Pass:461924196390404106>".format(user , ctx.message.server.name ))
+                await bot.delete_message(ctx.message)
+                await bot.send_message(user , "You Were Muted In {} , {}".format(ctx.message.server.name , reason))
+
+
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel(Required) , Try Again The Command !")
+   except:
+        await bot.say("<:Fail:461924435176325120> Something is Wrong !")
+
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_nicknames=True)
+async def changenick (ctx , user : discord.Member = None , *args):
+    msg = ' '.join(args)
+    channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+    try:
+        if channel:
+            if user is None:
+                await bot.say("<:Fail:461924435176325120>  Mention a User to Change Nickname !")
+            elif msg == "":
+                await bot.say("<:Fail:461924435176325120>  Nickname is Empty !")
+            else:
+                if user.avatar_url:
+                    av = user.avatar_url
+                else:
+                    av = user.default_avatar_url
+
+                embed=discord.Embed(title="{}'s Nickname Changed".format(user.name))
+                embed.set_author(name=user.name , icon_url=av)
+                embed.set_thumbnail(url=av)
+                embed.add_field(name="User Name", value=user.name, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Nickname Changed" , value=msg, inline=True)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel , embed=embed)
+
+                await bot.change_nickname(user, msg)
+                await bot.delete_message(ctx.message)
+                await bot.say("**{}'s** Name Was Changed to **{}** In **{} |** <:Pass:461924196390404106>".format(user , msg , ctx.message.server.name))
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel(Required) , Try Again The Command !")
+    except:
+        await bot.say("<:Fail:461924435176325120> Something is Wrong !")
+
+
+@bot.command(pass_context = True)
+@commands.has_permissions(manage_messages=True)
+async def warn(ctx , user : discord.Member = None ,*args ):
+    channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+    msg = ' '.join(args)
+
+    try:
+        if channel:
+            if user is None:
+                await bot.say("<:Fail:461924435176325120>  Mention a User to Warn !")
+            else:
+                if user.avatar_url:
+                    av = user.avatar_url
+                else:
+                    av = user.default_avatar_url
+
+                embed=discord.Embed(title="{} Warned".format(user.name))
+                embed.set_author(name=user.name, icon_url=av)
+                embed.set_thumbnail(url=av)
+                embed.add_field(name="User Name", value=user.mention, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Channel", value="<#"+ctx.message.channel.id+">", inline=True)
+                embed.add_field(name="Reason", value=msg, inline=False)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel , embed=embed)
+
+                await bot.delete_message(ctx.message)
+                await bot.send_message(user , "You Were Warned In {} , {}".format(ctx.message.server.name , msg))
+                await bot.say("**{}** Was Warned In **{} |** <:Pass:461924196390404106>".format(user , ctx.message.server.name))
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel(Required) , Try Again The Command !")
+    except:
+        await bot.say("<:Fail:461924435176325120> Something is Wrong !")
+
+@bot.command(pass_context=True)
+async def suggest(ctx , *args):
+    try:
+        suggest = ' '.join(args)
+        suggestC = discord.utils.get(ctx.message.server.channels, name='suggestions', type=discord.ChannelType.text)
+        if suggestC:
+            await bot.say("{} , Your Suggestion Was Sent In ! **|** <:Pass:461924196390404106>".format(ctx.message.author.mention))
+            await bot.delete_message(ctx.message)
+            await bot.send_message(suggestC , "**User:-** {}\n**Suggestion:-** {}".format(ctx.message.author.mention , suggest))
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "suggestions", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Suggestions Were Created As The Suggestions Channel(Required) , Try Again The Command !")
+
+    except:
+        await bot.send_message(ctx.message.author , "<:Fail:461924435176325120> Something is Wrong !")
+
+
+@bot.command(pass_context=True)
+async def report(ctx , user:discord.Member = None , *args):
+    try:
+        report = ' '.join(args)
+        reports = discord.utils.get(ctx.message.server.channels, name='reports', type=discord.ChannelType.text)
+        if reports:
+            if user is None:
+                await bot.say("<:Fail:461924435176325120>  Usage :- `<report [user] [report]`")
+            else:
+                await bot.say("{} , Your Report Was Sent In ! **|** <:Pass:461924196390404106>".format(ctx.message.author.mention))
+                await bot.send_message(reports , "**User:-** {}\n**Violater:-** {}\n**Report:-** {}".format(ctx.message.author.mention , user.mention , report ))
+                await bot.delete_message(ctx.message)
+                await bot.send_message(user , "You Were Reported In {} , {}".format(ctx.message.server.name , report))
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "reports", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Reports Were Created As The Reports Channel(Required) , Try Again The Command !")
+
+    except:
+        await bot.send_message(ctx.message.author , "<:Fail:461924435176325120> Something is Wrong !")
+
+
+@bot.command(pass_context=True)
+async def leave (ctx , *args):
+    try:
+        args = ' '.join(args)
+        if message.author.id == bot.user.owner.id:
+            server = bot.get_server(args)
+            await bot.leave_server(server)
+        else:
+            return
+    except:
+        await ("Scanner ! , Ummm !")
+
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_channels=True)
+async def c_unmute (ctx , user:discord.Member = None , *args):
+   channel = discord.utils.get(ctx.message.server.channels, name='hello-logs', type=discord.ChannelType.text)
+   try:
+        if channel:
+            if user is None:
+                await bot.say("<:Fail:461924435176325120> Mention a Muted User to Unmute in the Channel !")
+            else:
+                if user.avatar_url:
+                    ava = user.avatar_url
+                else:
+                    ava = user.default_avatar_url
+                await bot.delete_channel_permissions(ctx.message.channel, user)
+
+                embed=discord.Embed(title="{} Was Unmuted In Channel".format(user.name))
+                embed.set_author(name=user.name, icon_url=user.avatar_url)
+                embed.set_thumbnail(url=ava)
+                embed.add_field(name="User Name", value=user.name, inline=True)
+                embed.add_field(name="User ID", value=user.id, inline=True)
+                embed.add_field(name="Admin/Mod", value=ctx.message.author.mention, inline=True)
+                embed.add_field(name="Channel", value="<#"+ctx.message.channel.id+">", inline=True)
+                embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+                await bot.send_message(channel, embed=embed)
+                await bot.say("**{}** Was Unmuted in This Channel In **{} |** <:Pass:461924196390404106>".format(user , ctx.message.server.name ))
+                await bot.delete_message(ctx.message)
+
+        else:
+            await bot.delete_message(ctx.message)
+            await bot.create_channel(ctx.message.server, "hello-logs", type=discord.ChannelType.text)
+            await bot.say("<:Pass:461924196390404106> Channel Hello-Logs Were Created As The Log Channel , Try Again The Command !")
+   except:
+       await bot.say("<:Fail:461924435176325120> Something is Wrong !")
+
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def info(ctx):
     embed=discord.Embed(title="Info About The Bot", url="https://discord.gg/QP6ZdwK")
     embed.set_author(name="Hello Discord Bot", url="https://discord.gg/QP6ZdwK", icon_url="https://cdn.discordapp.com/avatars/445178799932440576/6843573388ba5ae8092b234c8b35bc2e.jpg?size=2048")
@@ -842,9 +1102,10 @@ async def info(ctx):
     await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def insult(ctx , name: discord.Member = None):
     if name is None:
-        await bot.say(":x: Mention a User to Insult !")
+        await bot.say("<:Fail:461924435176325120> Mention a User to Insult !")
     else:
         await bot.delete_message(ctx.message)
         await bot.send_message(ctx.message.channel, random.choice([  ":skull: **|** {} , You’re So Ugly That When You Cry, The Tears Roll Down The Back Of Your Head…Just To Avoid Your Face.".format(name),
@@ -876,8 +1137,6 @@ async def insult(ctx , name: discord.Member = None):
 @bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def open1(ctx , user : discord.Member = None):
-     #choice = random.choice(["You Found a **Boot** :boot:","You Found a **Sunglass** :dark_sunglasses: " , "You Found a **Pizza** :pizza: " ,"You Found a **Money Bag ** :moneybag: "])
-
      cho8 = random.choice(["<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**. ",
                                                                  "<:armor:447647517597892638> **|** You've just received **125 Double Armor**.",
                                                                  "<:dd:447648822265380867> **|** You've just received **125 Double Damage**.",
@@ -901,19 +1160,16 @@ async def open1(ctx , user : discord.Member = None):
                                                                  ":regional_indicator_p: **|** You've just received **Vanadium Paint** ! ",
                                                                  "<:riprip:419067396779933707> **|** You've just received a **Slap** From Community Manager For Hacking a The Yesterday RIP Bro !"])
 
-     embed=discord.Embed(description="**Opening Container** <:411277821357457428:447650450024431626>",color=0x111111)
+     embed=discord.Embed(description="<:411277821357457428:447650450024431626> **Opening a Container** <:411277821357457428:447650450024431626>",color=0x111111)
      x = await bot.send_message(ctx.message.channel , embed=embed)
-     await asyncio.sleep(0.5)
+     await asyncio.sleep(0.3)
      embed=discord.Embed(title="Container Opened", description=cho8, color=0x111111)
      embed.set_author(name="Container ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
      embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
      x = await bot.edit_message(x , embed=embed)
-    
-
 
 @bot.command(pass_context=True)
 @commands.cooldown(1, 20, commands.BucketType.user)
-
 async def open10(ctx):
 
     cho = random.choice(["<:Crystals:447647301826117634> **|** You've just received **3,500 Crystals**. ",
@@ -1147,28 +1403,68 @@ async def open10(ctx):
                                                                  "<:riprip:419067396779933707> **|** You've just received a **Slap** From Community Manager For Hacking a The Yesterday RIP Bro !"])
 
 
-
-    x = await bot.send_message(ctx.message.channel , "<:411277821357457428:447650450024431626>  Opening Containers... <:411277821357457428:447650450024431626> ")
+    embed=discord.Embed(description="**Opening Containers** <:411277821357457428:447650450024431626>",color=0x111111)
+    x = await bot.send_message(ctx.message.channel , embed=embed)
     await asyncio.sleep(1.5)
-    x = await bot.edit_message(x ,"**Container 1**\n\n" + cho )
+
+    embed=discord.Embed(title="Container Opened", description=cho, color=0x111111)
+    embed.set_author(name="Container 1 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 2**\n\n{}".format(cho2))
+
+    embed=discord.Embed(title="Container Opened", description=cho2, color=0x111111)
+    embed.set_author(name="Container 2 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 3**\n\n{}".format(cho3))
+
+    embed=discord.Embed(title="Container Opened", description=cho3, color=0x111111)
+    embed.set_author(name="Container 3 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 4**\n\n" + cho4 )
+
+    embed=discord.Embed(title="Container Opened", description=cho4, color=0x111111)
+    embed.set_author(name="Container 4 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 5**\n\n{}".format(cho5))
+
+    embed=discord.Embed(title="Container Opened", description=cho5, color=0x111111)
+    embed.set_author(name="Container 5 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 6**\n\n{}".format(cho6))
+
+    embed=discord.Embed(title="Container Opened", description=cho6, color=0x111111)
+    embed.set_author(name="Container 6 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 7**\n\n{}".format(cho7))
+
+    embed=discord.Embed(title="Container Opened", description=cho7, color=0x111111)
+    embed.set_author(name="Container 7 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 8**\n\n{}".format(cho8))
+
+    embed=discord.Embed(title="Container Opened", description=cho8, color=0x111111)
+    embed.set_author(name="Container 8 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 9**\n\n{}".format(cho9))
+
+    embed=discord.Embed(title="Container Opened", description=cho9, color=0x111111)
+    embed.set_author(name="Container 9 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
     await asyncio.sleep(2.5)
-    x = await bot.edit_message(x ,"**Container 10**\n\n{}".format(cho10))
+
+    embed=discord.Embed(title="Container Opened", description=cho10 , color=0x111111)
+    embed.set_author(name="Container 10 ", icon_url="https://cdn.discordapp.com/attachments/418005628255207424/456751945185493004/389886353430544387.png")
+    embed.set_footer(text=ctx.message.server.name , icon_url=ctx.message.server.icon_url)
+    x = await bot.edit_message(x , embed=embed)
 
 async def tutorial_uptime():
     await bot.wait_until_ready()
@@ -1184,6 +1480,4 @@ async def tutorial_uptime():
             hour += 1
 
 bot.loop.create_task(tutorial_uptime())
-
-
 bot.run(os.getenv("TOKEN"))
