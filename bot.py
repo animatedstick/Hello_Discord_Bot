@@ -15,7 +15,7 @@ import json
 minutes = 0
 hour = 0
 bot = discord.Client()
-bot_prefix= "<"
+bot_prefix= "<" 
 bot = commands.Bot(command_prefix=bot_prefix)
 
 
@@ -71,7 +71,7 @@ async def on_member_join(member):
             mem_ava = member.avatar_url
 
         channel1 = bot.get_channel("418001869781205004")
-        embed=discord.Embed(title="Joined", description="\n\n:tada: Welcome **{}** to **{}** , Your the **{}** User !\n\n".format(member.server.name, member.mention, len(server.members)))
+        embed=discord.Embed(title="Joined", description="\n\n:tada: Welcome **{}** to **{}** , Your the **{}** User !\n\n".format(member.mention,member.server.name, len(server.members)))
         embed.set_author(name=member.name, icon_url=mem_ava)
         embed.set_thumbnail(url=server.icon_url)
         embed.set_footer(text=server.name , icon_url=server.icon_url)
