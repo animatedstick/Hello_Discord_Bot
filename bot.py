@@ -50,14 +50,14 @@ async def on_command(command, ctx):
 
 @bot.event
 async def on_server_join(server):
-    await bot.change_presence(game=discord.Game(name="<HELP | {:,} Users ".format(len(set(bot.get_all_members()))),type=3))
+    await bot.change_presence(game=discord.Game(name="<HELP | {:,} Servers & {:,} Users ".format(len(bot.servers) , len(set(bot.get_all_members()))),type=3))
     channel = bot.get_channel("452352293275172894")
     await bot.send_message(server.owner ,":wave: Hey There ! I am **Hello** , A Discord Bot By Scanner#4797 <:Hello:446973883619213312>\n\nTo Get Started Use `<help` to View All Commands !\nMust Have a Channel Named `hello-logs` as the Log Channel\n\n**Useful Links:-**\nDiscord Bot List Vote :- https://discordbots.org/bot/445544179310002176\nSupport Server :- https://discord.gg/S6gDBqr\n\n:tada: **Enjoy ! Have Fun !**")
     await bot.send_message(channel, "**The bot has just joined a new server! :tada:**\n **Server name:** {}\n**Server Owner :**{}\n**Total members:** {:,}".format(server.name,server.owner,len(server.members)))
 
 @bot.event
 async def on_server_remove(server):
-    await bot.change_presence(game=discord.Game(name="<HELP | {:,} Users ".format(len(set(bot.get_all_members()))),type=3))
+    await bot.change_presence(game=discord.Game(name="<HELP | {:,} Servers & {:,} Users ".format(len(bot.servers) , len(set(bot.get_all_members()))),type=3))
     channel = bot.get_channel("452352293275172894")
     await bot.send_message(channel, "**The bot has just left a server! :cry:**\n **Server name:** {}\n**Server Owner :**{}\n**Total members:**{:,}".format(server.name,server.owner,len(server.members)))
 
@@ -146,6 +146,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(error, ctx):
+    await bot.change_presence(game=discord.Game(name="<HELP | {:,} Servers & {:,} Users ".format(len(bot.servers) , len(set(bot.get_all_members()))),type=3))
     if isinstance(error, commands.BadArgument):
         await bot.send_message(ctx.message.channel,"<:Fail:461924435176325120> Invalid Argument")
     elif isinstance(error, commands.CommandNotFound):
