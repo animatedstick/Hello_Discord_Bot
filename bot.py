@@ -65,17 +65,12 @@ async def on_server_remove(server):
 async def on_member_join(member):
     server = member.server
     if server.id == "418001869781205002":
-        if not member.avatar_url:
-            mem_ava = member.default_avatar_url
-        else:
-            mem_ava = member.avatar_url
+        channe = bot.get_channel("418001869781205004")
+        server = member.server
+        msg = "**:tada: Welcome to {} {} , You are the {} User!**".format(member.server.name, member.mention, len(server.members))
+        await bot.send_message(channe, msg)
 
-        channel1 = bot.get_channel("418001869781205004")
-        embed=discord.Embed(title="Joined", description="\n\n:tada: Welcome **{}** to **{}** , Your the **{}** User !\n\n".format(member.mention,member.server.name, len(server.members)))
-        embed.set_author(name=member.name, icon_url=mem_ava)
-        embed.set_thumbnail(url=server.icon_url)
-        embed.set_footer(text=server.name , icon_url=server.icon_url)
-        await bot.send_message(channel1, embed=embed)
+
 
     elif server.id == "458206172940337190":
         #MSI#
